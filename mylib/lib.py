@@ -40,7 +40,7 @@ def load_dataframe(spark_session, file_path="data/Clubs.csv"):
         StructField("club_code", StringType(), True),
         StructField("name", StringType(), True),
         StructField("domestic_competition_id", StringType(), True),
-        StructField("total_market_value", StringType(), True),  # Market values may have different formats (e.g., €-18.65m), so StringType is used
+        StructField("total_market_value", StringType(), True), 
         StructField("squad_size", IntegerType(), True),
         StructField("average_age", FloatType(), True),
         StructField("foreigners_number", IntegerType(), True),
@@ -48,14 +48,15 @@ def load_dataframe(spark_session, file_path="data/Clubs.csv"):
         StructField("national_team_players", IntegerType(), True),
         StructField("stadium_name", StringType(), True),
         StructField("stadium_seats", IntegerType(), True),
-        StructField("net_transfer_record", StringType(), True),  # Net transfer record may include currency symbols and text
+        StructField("net_transfer_record", StringType(), True),  
         StructField("coach_name", StringType(), True),
         StructField("last_season", IntegerType(), True),
         StructField("filename", StringType(), True),
         StructField("url", StringType(), True)
     ])
     
-    dataframe = spark_session.read.option("header", "true").schema(olympics_schema).csv(file_path)
+    dataframe = spark_session.read.option("header", "true")\
+        .schema(olympics_schema).csv(file_path)
     return dataframe
 
 
@@ -72,19 +73,20 @@ def display_summary_statistics(dataframe):
 
 
 def transform_data(df):
-    """Apply transformations to add a medal scoring column and a combined discipline-event column."""
+    """Apply transformations to add a medal scoring column
+      and a combined discipline-event column."""
     transformed_df = df.withColumn(
         "total_market_value_numeric",
         when(col("total_market_value").startswith("€"), 
-            col("total_market_value").substr(2, 100).cast("float"))  # Assume a max length for substring
+            col("total_market_value").substr(2, 100).cast("float"))
         .otherwise(None)
     )
-    
-    # Calculate market value per player, handling cases where squad_size or total_market_value is null
+
     transformed_df = transformed_df.withColumn(
         "market_value_per_player",
         when(
-            (col("squad_size").isNotNull()) & (col("total_market_value_numeric").isNotNull()),
+            (col("squad_size").isNotNull()) \
+                & (col("total_market_value_numeric").isNotNull()),
             col("total_market_value_numeric") / col("squad_size")
         ).otherwise(None)
     )
@@ -100,7 +102,7 @@ def transform_data(df):
 
 if __name__ == '__main__':
     extract_csv(
-        'https://raw.githubusercontent.com/nogibjj/Ramil-Complex-SQL-Query-MySQL-Database/refs/heads/main/data/clubs.csv',
+    'https://raw.githubusercontent.com/nogibjj/Ramil-Complex-SQL-Query-MySQL-Database/refs/heads/main/data/clubs.csv',
         file_name = 'Clubs.csv',
         target_directory='data'
     )
