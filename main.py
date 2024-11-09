@@ -1,19 +1,46 @@
 """
 Main cli or app entry point
 """
+from mylib.lib import extract_csv, run_spark_sql_query, transform_data, display_summary_statistics, load_dataframe, extract_csv, terminate_spark_session, initialize_spark_session
 
-from mylib.calculator import add
-import click
 
-#var=1;var=2
+def pyspark_process():
+    file_path = extract_csv(
+            'https://raw.githubusercontent.com/nogibjj/Ramil-Complex-SQL-Query-MySQL-Database/refs/heads/main/data/clubs.csv',
+            file_name = 'Clubs.csv',
+            target_directory='data'
+        )
+    
+    spark = initialize_spark_session('Initial')
+    
+    df = load_dataframe(spark)
 
-@click.command("add")
-@click.argument("a", type=int)
-@click.argument("b", type=int)
-def add_cli(a, b):
-    click.echo(add(a, b))
 
+    display_summary_statistics(df)
+
+    run_spark_sql_query(
+        spark,
+        df,
+        sql_query= """
+            SELECT 
+                domestic_competition_id,
+                SUM(squad_size) AS total_squad_size
+            FROM 
+                Clubs
+            GROUP BY 
+                domestic_competition_id
+            ORDER BY 
+                total_squad_size DESC
+        """,
+        temp_view_name = 'Clubs'
+
+    )
+
+
+    transform_data(df)
+
+    terminate_spark_session(spark)
 
 if __name__ == "__main__":
     # pylint: disable=no-value-for-parameter
-    add_cli()
+    pyspark_process()
