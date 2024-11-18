@@ -3,7 +3,7 @@
 
 ![alt text](https://as2.ftcdn.net/jpg/05/48/54/55/1000_F_548545561_b8Wsp8NkKKWN2Cu3ZEFxWgs7nDr5AWgC.jpg)
 
-# Ramil's PySpark Data Processing Project
+# Ramil's Data Pipeline with Databricks
 
 ## Project Overview
 This project is focused on data processing using PySpark, a powerful and flexible tool for handling large-scale data processing. The primary goal of this project is to leverage PySpark's distributed processing capabilities to load, transform, and analyze big datasets efficiently. PySpark process the Clubs.csv file located in data folder.
@@ -22,8 +22,8 @@ This project is focused on data processing using PySpark, a powerful and flexibl
 ### Installation
 1. Clone the repository:
     ```bash
-    git clone https://github.com/nogibjj/Ramil_PySpark_Data_Processing.git
-    cd Ramil_PySpark_Data_Processing
+    git clone https://github.com/nogibjj/Ramil-Data-Pipeline-Databricks
+    cd Ramil-Data-Pipeline-Databricks
     ```
 2. Set up a virtual environment (Automatically done in Github Workspace):
     ```bash
