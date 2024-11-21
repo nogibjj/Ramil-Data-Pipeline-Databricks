@@ -1,3 +1,4 @@
+[![CI](https://github.com/nogibjj/Ramil-Data-Pipeline-Databricks/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/Ramil-Data-Pipeline-Databricks/actions/workflows/cicd.yml)
 
 # Ramil-Data-Pipeline-Databricks
 ![alt text](https://as2.ftcdn.net/jpg/05/48/54/55/1000_F_548545561_b8Wsp8NkKKWN2Cu3ZEFxWgs7nDr5AWgC.jpg)
