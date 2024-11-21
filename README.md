@@ -1,73 +1,80 @@
-[![CI](https://github.com/nogibjj/Ramil_PySpark_Data_Processing/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/Ramil_PySpark_Data_Processing/actions/workflows/cicd.yml)
+
+# Ramil-Data-Pipeline-Databricks
+
+## Project Description
+
+This project demonstrates a data pipeline built using Databricks. The pipeline integrates a data source and a data sink, showcasing how to extract, transform, and load (ETL) data efficiently within the Databricks environment.
+
+---
+
+## Requirements
+
+- **Data Pipeline:** Created using Databricks.
+- **Data Source and Sink:** Includes at least one data source and one data sink.
+- **CI/CD Integration:** Configured CI/CD pipeline for automated testing and deployment.
+
+---
+
+## Pipeline Overview
+
+1. **Data Source:** 
+   - The pipeline ingests data from [describe source, e.g., CSV files, API, or database].
+   - Ensure the data source is configured in the Databricks workspace.
+
+2. **Data Transformation:** 
+   - Transformation logic implemented using PySpark.
+   - Sample transformations include filtering, aggregation, and joining.
+
+3. **Data Sink:** 
+   - Processed data is stored in [describe sink, e.g., Azure Blob Storage, Databricks Delta table].
+
+---
+
+## CI/CD Pipeline
+
+A CI/CD pipeline is integrated to ensure robust testing and seamless deployment. The pipeline includes:
+- Automated testing for code functionality and performance.
+- Deployment scripts for transferring changes to the production workspace.
+
+---
+
+## ETL Pipeline
+
+The pipeline has been set up and utilizes the scripts located under the mylib directory. First, data is retrieved using Pandas, after which a Spark DataFrame is created and loaded into the warehouse. Finally, based on the loaded data, transformations are applied, and the data is loaded into different table withing same warehouse.
 
 
-![alt text](https://as2.ftcdn.net/jpg/05/48/54/55/1000_F_548545561_b8Wsp8NkKKWN2Cu3ZEFxWgs7nDr5AWgC.jpg)
-
-# Ramil's Data Pipeline with Databricks
-
-## Project Overview
-This project is focused on data processing using PySpark, a powerful and flexible tool for handling large-scale data processing. The primary goal of this project is to leverage PySpark's distributed processing capabilities to load, transform, and analyze big datasets efficiently. PySpark process the Clubs.csv file located in data folder.
-
-## Features
-- Data ingestion and cleaning using PySpark DataFrames
-- Exploratory data analysis (EDA) to understand key data insights
-- Data transformation and aggregation with PySpark SQL
-- Scalable codebase that can handle large datasets with minimal adjustments
-
-## Prerequisites
-- Python 3.8 or above
-- Apache Spark with PySpark library (If you use Github Workspace it already done)
-- Recommended: Jupyter Notebook or IDE with PySpark support
-
-### Installation
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/nogibjj/Ramil-Data-Pipeline-Databricks
-    cd Ramil-Data-Pipeline-Databricks
-    ```
-2. Set up a virtual environment (Automatically done in Github Workspace):
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-    ```
-3. Install the required packages:
-    ```bash
-    make install
-    ```
 
 
-## Usage
-1. Activate the virtual environment (if not already active).
-2. Run the data processing script:
-    ```bash
-    python main.py
-    ```
-3. Explore the results in the output directory.
+---
 
-4. For testing the code:
-    ```bash
-        make test
-    ```
-5. For linting:
-    ```bash
-        make lint
-    ```
-6. For formating:
-    ```bash
-        make format
-    ```
+## How to Run
 
+1. **Setup Databricks Workspace:**
+   - Configure your Databricks environment with the necessary cluster settings.
+   - Upload the script or notebook into the Databricks workspace.
 
-## Project Structure
-```
-├── data                # Directory for datasets
-├── scripts             # Python scripts for various tasks
-├── README.md           # Project documentation
-└── requirements.txt    # Python package dependencies
-```
+2. **Configure Data Source and Sink:**
+   - Specify the paths or connections for the data source and sink.
+
+3. **Run Pipeline:**
+   - Execute the notebook or script to initiate the pipeline.
+
+4. **Validate Output:**
+   - Verify the processed data in the sink location.
+
+---
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Databricks example images
- 
+This project is open-source and available under the MIT License.
+
+---
+
+---
+
+## Images
+
+The following images are included in the `data` folder for reference:
+- Data pipeline architecture diagram.
+- Sample data source and sink configurations.
+
