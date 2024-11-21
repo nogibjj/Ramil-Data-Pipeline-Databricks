@@ -1,75 +1,53 @@
-import pytest
-from pyspark.sql import SparkSession
-from mylib.lib import (
-    extract_csv,
-    run_spark_sql_query,
-    transform_data,
-    display_summary_statistics,
-    load_dataframe,
-)
+"""
+Test Databricks Functionality
+"""
+
+import requests
+from dotenv import load_dotenv
 import os
 
+# Load environment variables
+load_dotenv()
+SERVER_HOSTNAME = os.getenv("SERVER_HOSTNAME")
+ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
+CLUSTER_ID = "1121-024828-5se7kk8r"
+BASE_URL = f"https://{SERVER_HOSTNAME}/api/2.1"
 
-@pytest.fixture(scope="module")
-def spark():
-    # Start a Spark session for testing
-    spark_session = (
-        SparkSession.builder.master("local[*]").appName("test_app").getOrCreate()
-    )
-    yield spark_session
-    # Stop the Spark session after tests
-    spark_session.stop()
-
-
-def test_initialize_spark_session(spark):
-    # Test if Spark session is started
-    assert spark is not None
+# Validate environment variables
+if not SERVER_HOSTNAME or not ACCESS_TOKEN:
+    raise ValueError("SERVER_HOSTNAME and ACCESS_TOKEN must be set in the .env file.")
 
 
-def test_extract_csv():
-    # Test if the CSV file is downloaded and saved correctly
-    test_file_path = extract_csv(
-        "https://raw.githubusercontent.com/nogibjj/Ramil-Complex-SQL-Query-MySQL-Database/refs/heads/main/data/clubs.csv",
-        file_name="Test_Clubs.csv",
-        target_directory="data",
-    )
-    assert os.path.exists(test_file_path), "File was not downloaded or saved correctly."
+def check_cluster_existence(cluster_id: str, headers: dict) -> bool:
+
+    try:
+        response = requests.get(
+            f"{BASE_URL}/clusters/get",
+            headers=headers,
+            params={"cluster_id": cluster_id},
+        )
+        response.raise_for_status()
+        # Check if the response contains a valid file path
+        # return response.json()
+        return "cluster_id" in response.json()
+    except requests.exceptions.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err}")
+    except requests.exceptions.RequestException as req_err:
+        print(f"Request error occurred: {req_err}")
+    return False
 
 
-def test_load_dataframe(spark):
-    # Test loading the CSV file into a DataFrame
-    df = load_dataframe(spark, file_path="data/Test_Clubs.csv")
-
-    assert df is not None, "DataFrame is None; load_dataframe failed."
-    assert (
-        df.count() > 0
-    ), "DataFrame is empty; load_dataframe did not load data correctly."
-    assert "club_id" in df.columns, "Expected column 'club_id' not found in DataFrame."
-
-
-def test_run_spark_sql_query(spark):
-    # Test running an SQL query on a temporary view
-    df = load_dataframe(spark, file_path="data/Test_Clubs.csv")
-
-    res = run_spark_sql_query(
-        spark, df, sql_query="SELECT * FROM temp_table", temp_view_name="temp_table"
-    )
-
-    assert res is None, "Query execution failed."
+def test_databricks():
+    """
+    Test if the Databricks file store path exists and is accessible.
+    """
+    headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
+    path_exists = check_cluster_existence(CLUSTER_ID, headers)
+    assert path_exists, f"Cluster Id- {CLUSTER_ID} not found"
+    print(f"Test successful: Cluster Id -  '{CLUSTER_ID}' exists and is accessible.")
 
 
-def test_display_summary_statistics(spark):
-    # Test displaying summary statistics
-    df = load_dataframe(spark, file_path="data/Test_Clubs.csv")
-    res = display_summary_statistics(df)
+if __name__ == "__main__":
+    headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
 
-    assert res is None, "Displaying summary statistics failed."
-
-
-def test_transform_medal_data(spark):
-    # Test transformation to calculate market value per player and merged summary column
-    df = load_dataframe(spark, file_path="data/Test_Clubs.csv")
-    transformed_df = transform_data(df)
-
-    # Check if the new columns are added to the DataFrame
-    assert transformed_df is None
+    print(check_cluster_existence(CLUSTER_ID, headers))

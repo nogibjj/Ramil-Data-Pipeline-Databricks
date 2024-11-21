@@ -69,11 +69,4 @@ This project is focused on data processing using PySpark, a powerful and flexibl
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## PySpark example images
-
-
-![alt text](https://github.com/nogibjj/Ramil_PySpark_Data_Processing/blob/ecc6957dde6f0ca077234746ac74f48b12caa843/data/Analtyics.png)
-
-![alt text](https://github.com/nogibjj/Ramil_PySpark_Data_Processing/blob/ecc6957dde6f0ca077234746ac74f48b12caa843/data/SummaryStats.png)
-
-![alt text](https://github.com/nogibjj/Ramil_PySpark_Data_Processing/blob/ecc6957dde6f0ca077234746ac74f48b12caa843/data/Transformation.png)
+## Databricks example images
