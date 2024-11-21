@@ -1,17 +1,14 @@
-from pyspark.sql import SparkSession
-from pyspark.sql.functions import when, concat_ws
 import pandas as pd
-
 
 
 def extract_csv(url):
     pd_df = pd.read_csv(url)
 
-    print('Successfully extracted the CSV file')
+    print("Successfully extracted the CSV file")
     return pd_df
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     extract_csv(
-        'https://raw.githubusercontent.com/nogibjj/Ramil-Data-Pipeline-Databricks/refs/heads/main/data/Clubs.csv'
+        "https://raw.githubusercontent.com/nogibjj/Ramil-Data-Pipeline-Databricks/refs/heads/main/data/Clubs.csv"
     )
